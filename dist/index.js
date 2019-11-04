@@ -2881,11 +2881,16 @@ function downloadUrl(version) {
             return util.format('https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.4.0/aws-iam-authenticator_%s_windows_amd64.exe', version);
     }
 }
+const binaryName = 'aws-iam-authenticator';
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         let version = core.getInput('version', { 'required': true });
-        const path = yield toolCache.downloadTool(downloadUrl(version));
-        core.addPath(path);
+        let cachedToolpath = toolCache.find(binaryName, version);
+        if (!cachedToolpath) {
+            const downloadPath = yield toolCache.downloadTool(downloadUrl(version));
+            cachedToolpath = yield toolCache.cacheFile(downloadPath, binaryName, binaryName, version);
+        }
+        core.addPath(cachedToolpath);
     });
 }
 run().catch(core.setFailed);
