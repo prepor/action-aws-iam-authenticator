@@ -19,10 +19,17 @@ function downloadUrl(version: string): string {
     }
 }
 
+const binaryName = 'aws-iam-authenticator'
+
 async function run() {
     let version = core.getInput('version', { 'required': true });
-    const path = await toolCache.downloadTool(downloadUrl(version));
-    core.addPath(path)
+    let cachedToolpath = toolCache.find(binaryName, version);
+    if (!cachedToolpath) {
+        const downloadPath = await toolCache.downloadTool(downloadUrl(version));
+        cachedToolpath = await toolCache.cacheFile(downloadPath, binaryName, binaryName, version)
+    }
+
+    core.addPath(cachedToolpath)
 }
 
 run().catch(core.setFailed);
