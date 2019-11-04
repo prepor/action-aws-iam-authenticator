@@ -2868,6 +2868,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const os = __importStar(__webpack_require__(87));
 const util = __importStar(__webpack_require__(669));
+const fs = __importStar(__webpack_require__(747));
 const toolCache = __importStar(__webpack_require__(533));
 const core = __importStar(__webpack_require__(470));
 function downloadUrl(version) {
@@ -2888,6 +2889,7 @@ function run() {
         let cachedToolpath = toolCache.find(binaryName, version);
         if (!cachedToolpath) {
             const downloadPath = yield toolCache.downloadTool(downloadUrl(version));
+            fs.chmodSync(downloadPath, '0755');
             cachedToolpath = yield toolCache.cacheFile(downloadPath, binaryName, binaryName, version);
         }
         core.addPath(cachedToolpath);

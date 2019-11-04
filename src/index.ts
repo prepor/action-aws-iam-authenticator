@@ -1,5 +1,6 @@
 import * as os from 'os';
 import * as util from 'util';
+import * as fs from 'fs';
 
 import * as toolCache from '@actions/tool-cache';
 import * as core from '@actions/core';
@@ -26,6 +27,7 @@ async function run() {
     let cachedToolpath = toolCache.find(binaryName, version);
     if (!cachedToolpath) {
         const downloadPath = await toolCache.downloadTool(downloadUrl(version));
+        fs.chmodSync(downloadPath, '0755');
         cachedToolpath = await toolCache.cacheFile(downloadPath, binaryName, binaryName, version)
     }
 
