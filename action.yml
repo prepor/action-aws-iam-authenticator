@@ -1,13 +1,13 @@
-name: 'aws-iam-authenticator installer'
-description: 'Install a specific version of aws-iam-authenticator'
-inputs: 
+name: "aws-iam-authenticator installer"
+description: "Install a specific version of aws-iam-authenticator"
+inputs:
   version:
-    description: 'Version of aws-iam-authenticator'
+    description: "Version of aws-iam-authenticator"
     required: true
-    default: '0.4.0'
+    default: "0.5.2"
 branding:
-  icon: 'gift'
-  color: 'blue'
+  icon: "gift"
+  color: "blue"
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"
