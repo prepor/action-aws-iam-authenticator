@@ -2,12 +2,12 @@ name: Test
 
 on:
   push:
-    branches:    
+    branches:
       - master
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: prepor/action-aws-iam-authenticator@master
-    - run: aws-iam-authenticator version
+      - uses: prepor/action-aws-iam-authenticator@master
+      - run: aws-iam-authenticator version
